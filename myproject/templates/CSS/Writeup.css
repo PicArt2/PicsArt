@@ -1,0 +1,68 @@
+
+.img
+{
+	float:left;
+	
+	width:80px;
+	margin:10px;
+}
+.text
+{
+	width: 300px;
+	margin-left:330px;
+	margin-top: -35px;	
+	float:left;
+	 font-size: 15px;
+	   font-family: Roboto;
+	color: white;
+	text-shadow: 10px 10px 30px yellow;
+	
+}
+
+#geeks
+{
+	position: absolute;
+	margin-left: 120px;
+	margin-top: 280px;
+	width: 300px;
+}
+.text_1
+{
+	width: 300px;
+	position: absolute;
+	margin-left: 450px;	
+	margin-top: 240px;
+	 font-size: 15px;
+    font-family: "Roboto",sans serif;
+	color: white;
+	text-shadow: 10px 10px 30px green;
+
+}
+
+h1
+{
+	color:white;
+	margin-left: 225px;
+	 font-family:"Lucida Console", Monaco, monospace;
+	font-size:60px;
+}
+
+.text_2
+{
+	position: absolute;
+	width:300px;
+	margin-top: 560px;
+	margin-left: 450px;
+	 font-size: 15px;
+	  font-family: "Roboto",sans serif;
+	color: white;
+	text-shadow: 10px 10px 30px red;
+}	
+
+.geeks11
+{
+	position: absolute;
+	margin-left: -650px;
+	margin-top: 550px;
+	border-radius:25px;
+}	

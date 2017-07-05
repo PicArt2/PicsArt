@@ -1,0 +1,79 @@
+<html>
+<head>
+    
+</head>
+<body>
+     <a id='info'><h3>More Information</h3></a>
+    
+    
+    <script>
+        var text = document.getElementById('text');
+         var res = (("{{res}}").replace(/&(l|g|quo)t;/g, function(a,b){
+                return {
+                    l   : '<',
+                    g   : '>',
+                    quo : '"'
+                }[b];
+            }));
+
+ myData = JSON.parse(res);
+var cl = myData.images[0].classifiers[0].classes;
+//alert(cl);
+        
+         var t  = document.createElement('h2');
+                t.innerHTML = "This is an image of a "+cl[0].class+".<br>";
+       document.body.appendChild(t);
+        var hier = cl[0].type_hierarchy;
+        var labels=[];
+        if(hier!=null)
+            {
+                 var t2 = document.createElement('h2');
+            t2.innerHTML="The "+cl[0].class+" is a ";
+        var labels = hier.split("/");
+        //alert(labels);
+        for(var i=labels.length-2;i>0;i--)
+            {
+                t2.innerHTML+=labels[i]+", ";
+            }
+                
+                document.body.appendChild(t2);
+            }
+        
+        
+        labels.push('color');
+
+        
+        for(var i=1;i<cl.length;i++)
+            {
+                var str  = cl[i].class
+                //alert(typeof(str));
+                if(labels.indexOf(cl[i].class)==-1 && !str.includes('color'))
+                    {
+                var t  = document.createElement('h2');
+                //t.innerHTML = cl[i].class;
+                var score = cl[i].score;
+                document.body.appendChild(t);
+                if(score>0.8)
+                    t.innerHTML="There is a high probaility that this is an image of a "+str;
+                    //t.style.color='green';
+                else if(score>0.6)
+                    t.innerHTML="It is probable that this is an image of a "+str;
+                    //t.style.color='yellow';
+                else
+                    t.innerHTML="There is a possibility that this is an image of a "+str;
+                    //t.style.color='red';
+                    }
+                
+            }
+        
+        var info = document.getElementById('info');
+        info.setAttribute('href','https://www.google.co.in/search?q='+cl[0].class);
+        info.innerHTML += " about "+cl[0].class;
+        
+        
+        
+    </script>
+   
+    
+</body>
+</html>

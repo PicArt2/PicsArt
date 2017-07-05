@@ -1,0 +1,55 @@
+<html>
+<head>
+
+</head>
+
+
+<body>
+
+    <h1>THIS IS A TEST</h1>
+
+
+<form method='POST'>
+    {% csrf_token %}
+    <input type='text' name='username'/>
+    <input type='submit' >TRY</input>
+</form>
+<script>
+function send()
+{
+    alert("test");
+      var req = new XMLHttpRequest()
+			//alert("test");
+	        req.onreadystatechange = function(){
+	            if (req.readyState == 4 && req.status==200)
+	            {
+	                    var response = JSON.parse(req.responseText)
+                        if(response.len>0)
+                        {
+                            userInp.style.backgroundColor='#FADBD8';
+                            userInp.setAttribute('id','inc');
+                        }
+                        else
+                            {
+                            userInp.style.backgroundColor='#FFFFFF';
+                            userInp.setAttribute('id','none');
+                            }
+                            
+	            }
+				else
+					console.log(req.status);
+	        }
+	        req.open('POST', '/polls/')
+	        req.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+            req.setRequestHeader("X-CSRFToken", 4347234324242);
+	        //var user = userInp.value
+	        var postVars = 'username='+"user";
+	        req.send(postVars)
+}
+
+
+</script>
+
+</body>
+</html>
+

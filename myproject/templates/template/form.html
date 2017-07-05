@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <title>Administrator Login</title>
+ 
+    
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <!--<link href="signup.css" rel="stylesheet">-->
+	
+
+	<style>
+
+/*
+for the virtual keyboard
+*/  .but{background: -webkit-linear-gradient(-90deg, #FEFFFF, #FFFFFF);color:#000000;border:1px solid rgba(255,0,0,0.5);height:55px;width:60px;font-size:28px;text-align:center;margin:2px;border-radius: 5px;}
+            #del,#cap,input[value='Space']{width:15%;display:inline}
+
+			body {
+  padding-top: 10px;
+  padding-bottom: 0px;
+  background:url("option2.jpg");
+}
+
+
+#row0{position:relative;left:25%;right:0%;top:30px;width:50%}
+#row1{position:relative;left:25%;top:30px;width:50%}
+#row2{position:relative;left:25%;top:30px;width:50%}
+#row3{position:relative;left:25%;top:30px;width:50%}
+#row4{position:relative;left:25%;top:30px;width:50%}
+#del,#cap{position:relative;left:25%;top:30px}
+input[value='Space']{width:20%;display:inline}
+
+.but:active{transform:scale(1.1,1.1);border:none}
+
+
+input
+{
+    margin:6px;
+}
+ 
+.form-signin
+{
+    max-width: 50%;
+    padding: 15px;
+    margin-left:-30%;
+    margin-top:10%;
+}
+  
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+#btnSignUp
+{
+    margin:10px;
+}
+        
+        #cont
+        {
+            position: relative;
+            left:0;
+        }
+        
+        .keyboard
+        {
+            margin-right:-10%;
+        }
+	</style>
+    
+  </head>
+ 
+  <body>
+ 
+    <div id="cont" class="container"> 
+      
+        <form class="form-signin">
+        <label for="inputName" class="sr-only">Name</label>
+        <input type="name" name="name" id="name" class="form-control" placeholder="Phone Number" required autofocus>
+        <label for="inputEmail" class="sr-only">Email address/phone number</label>
+        <input type="email" name="username" id="username" class="form-control" placeholder="Email Address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name="pwd" id="pwd" class="form-control" placeholder="Password" required>
+        <a href="http://localhost:5000/login"><input id="submit" class="btn btn-lg btn-primary btn-block" type="submit" onclick="Submit()" value="Sign Up"/>
+     </a>
+     
+      </form>
+    
+    </div>
+
+
+<script>
+
+
+
+var nameInp = document.getElementById('name');               //HTML objects referring to name,username, and password
+var userInp = document.getElementById('username');
+var pwdInp = document.getElementById('pwd');
+//document.addEventListener('keyup',check,false);
+var name = nameInp.value;
+var pwd = pwdInp.value                                    //acquiring values of the name and password input fields
+
+
+var i=0;
+function encrypt(pwd,name)               //redundant for now, do not bother with it
+{
+var encPwd='';
+var i=0;
+
+//alert(name.length);
+
+for(var j=0;j<pwd.length;j++,i++)
+{
+//alert(j);
+encPwd = encPwd + String.fromCharCode(pwd.charCodeAt(j-1)+name.charCodeAt(i)%10);
+//alert(encPwd);
+if(i==name.length)
+	i=0;
+
+}
+
+return encPwd;
+
+}
+
+function check()          //function to check if the user input username already exists in database
+// calls a AJAX script to communicate with the database using python flask as server-side application on every key press on
+// the virtual keyboard
+// if the username already exists, the input field background turns redundant
+// Note: this does NOT work with the external keyboard keypresses
+
+
+{
+	        var req = new XMLHttpRequest()
+			//alert("test");
+	        req.onreadystatechange = function(){                    // this function gets called when the response from the server changes, including status
+	            if (req.readyState == 4 && req.status==200)
+	            {
+	                    var response = JSON.parse(req.responseText)   //response returns no. of rows in the database with the same username as the input
+                        if(response.len>0)                               //if username exists in db
+                            userInp.style.backgroundColor='#FADBD8';     // make background red
+                        else                                            
+                            userInp.style.backgroundColor='#FFFFFF';     //revert to normal
+	            }
+				else                                        //error handling code
+					console.log(req.status);
+	        }
+	        req.open('POST', '/check')                    //routes the url to http://localhost:5000/check
+	        req.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+	        var user = userInp.value
+	        var postVars = 'username='+user    //posts username with the url
+	        req.send(postVars)   //sends the data with url
+
+            
+}
+
+
+
+function Submit()      //function to submit the form data
+//calls an AJAX script to run a python-flask program on the server, which inserts the form data into the database
+// At the end of the function call, reroutes page to the login page
+	    {
+
+			//alert("submit");
+	        var req = new XMLHttpRequest();
+	        req.onreadystatechange = function()
+	        {
+	            if (req.readyState == 4 && req.status==200)     //redundant
+	            {
+	                    //var response = JSON.parse(req.responseText)
+	                    //document.getElementById('').innerHTML = response.username
+                        //alert(response.username);
+
+	            }
+	        }
+	    
+	        req.open('POST', '/ajax');         //routes the url to http://localhost:5000/ajax
+	        req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	        var name = nameInp.value;
+            var user = userInp.value;              // values in the input fields
+	        var pwd = pwdInp.value;
+			//encPwd = encrypt(pwd,name);
+			//alert(encPwd);
+	        var postVars = 'name='+name+'&username='+user+'&password='+pwd; //posts the form data with the url
+	        req.send(postVars);                                              // sends the form data with the url
+	        //req.close();
+            window.open ('http://localhost:5000/login','_self',false)    // opens the login page
+	        return false
+	    }
+
+
+// from this point forth it's only for the virtual keyboard
+//It's a mess as the old code was modified, and there are different approaches
+
+        var r1=[81,87,69,82,84,89,85,73,79,80];      //QWERTYUIOP
+        var r2 = [65,83,68,70,71,72,74,75,76];         //ASDFGHJKL
+        var r3 = [90,88,67,86,66,78,77,0];          //ZXCVBNM
+
+        var r4 = ['=',',','/',';','\'','[',']','=','-','.']  //special characters
+
+        var row1 = document.createElement("div");   //creates a div for a row of buttons
+		row1.setAttribute('id','row1');               //sets an id
+        
+        row1.style.display="none";                    //hidden till input field is selected
+
+        //repeated for the other rows
+        var row2 = document.createElement("div");
+		row2.setAttribute('id','row2');
+
+        row2.style.display="none";
+        
+        var row3  = document.createElement("div");
+		row3.setAttribute('id','row3');
+        var row0  = document.createElement("div");
+		row0.setAttribute('id','row0');
+       
+        row3.style.display="none";
+        row0.style.display="none";
+
+        var row4 = document.createElement("div");
+		row4.setAttribute('id','row4');
+        
+       // row4.style.display="none";
+
+//dynamically creating the buttons for the first row of keyboard keys
+// the first row is only numbers (row0)
+        for(var i=0;i<10;i++)
+        {
+            var key = document.createElement("input");
+            key.setAttribute("type","button");
+            key.setAttribute("id",i);                      // id = 0,1,2,3...etc.
+            key.setAttribute("class","but");
+            key.setAttribute("value",i);                   // value = 0,1,2,3...etc.         
+            key.setAttribute("onclick","numpr(this.id)")      //sets onclick to numpr function, passes the id of the button on click
+            row0.appendChild(key)                      // adds the button to the row
+
+        }
+// repeating the same for the other rows
+//The second row (row1) has qwertyuiop
+        
+
+        for(var i=0;i<10;i++)
+        {
+            var key = document.createElement("input");
+            key.setAttribute("type","button");
+            key.setAttribute("id",r1[i]+32);                       //adds 32 to each number in array to get small letters
+            key.setAttribute("class","but");
+            key.setAttribute("value",String.fromCharCode(r1[i]+32));  // value is the character from the ascii value
+            key.setAttribute("onclick","keypr(this.id)")
+            row1.appendChild(key)
+            }
+        for(var i=0;i<9;i++)
+        {
+            var key = document.createElement("input");
+            key.setAttribute("type","button");
+            key.setAttribute("id",r2[i]+32);
+            key.setAttribute("class","but");
+            key.setAttribute("value",String.fromCharCode(r2[i]+32));
+            key.setAttribute("onclick","keypr(this.id)")
+            row2.appendChild(key)
+            }
+
+             for(var i=0;i<7;i++)
+        {
+            var key = document.createElement("input");
+            key.setAttribute("type","button");
+            key.setAttribute("id",r3[i]+32);
+            key.setAttribute("class","but");
+            key.setAttribute("value",String.fromCharCode(r3[i]+32));
+            key.setAttribute("onclick","keypr(this.id)")
+            row3.appendChild(key)
+            }
+
+        for(var i=0;i<10;i++)
+        {
+            var key = document.createElement("input");
+            key.setAttribute("type","button");
+            key.setAttribute("id",(r4[i]).charCodeAt(0));         // assigns the ascii value of the character to the id
+            key.setAttribute("class","but");
+            key.setAttribute("value",r4[i]);                     //value is the character itself
+            key.setAttribute("onclick","keypr(this.id)")
+            row4.appendChild(key)
+            }
+
+//special buttons : space, delete, caps
+            var key = document.createElement("input");
+            key.setAttribute("type","button");
+            key.setAttribute("id",r3[i]+32);   //sets id to ascii value of space
+            key.setAttribute("class","but");
+            key.setAttribute("value","Space");           //name appearing on key
+            key.setAttribute("onclick","keypr(this.id)")      // keypress function is the same as above 
+            row3.appendChild(key)
+
+            delbtn = document.createElement("input");
+            delbtn.setAttribute("type","button");
+            delbtn.setAttribute("class","but");
+            delbtn.setAttribute("id","del");               
+            delbtn.setAttribute("value","Delete");
+            delbtn.setAttribute("onclick","del()")     //function to delete last character from the input field
+            delbtn.style.display="none";
+            row3.appendChild(delbtn);               // appended into the last row, newline
+
+
+            caps = document.createElement("input");
+            caps.setAttribute("type","button");
+            caps.setAttribute("class","but");
+            caps.setAttribute("id","cap");
+            caps.setAttribute("value","Caps");
+            caps.setAttribute("onclick","cap()")    //function to capitalize the keys called
+            caps.style.display="none";
+
+
+        document.body.appendChild(row0);  // all the rows and special buttons are appended to the body
+        document.body.appendChild(row1);
+        document.body.appendChild(row2);
+        document.body.appendChild(row3);
+        document.body.appendChild(row4);
+        document.body.appendChild(delbtn);
+        document.body.appendChild(caps); 
+
+		var active;         // to determine the last focussed input field
+
+        nameInp.addEventListener("focus",show,false);   //eventListener to activate show function when the input fields are focussed
+		userInp.addEventListener("focus",show,false);
+		pwdInp.addEventListener("focus",show,false);
+
+        nameInp.addEventListener("blur",hide,false); //redundant for now
+		userInp.addEventListener("blur",hide,false);
+		pwdInp.addEventListener("blur",hide,false);
+		
+
+        function show(e)  //function to show the keyboard on focus of one of the inputd
+        {
+            row1.style.display="block";        //sets display parameter of the rows and special buttons to block
+            row2.style.display="block";
+            row3.style.display="block";
+            delbtn.style.display="inline";
+            caps.style.display="inline";
+            row0.style.display="block";
+			//alert(this.id);
+			active=document.getElementById(this.id);  //determines the active element
+            nameInp.style.border="0.5px solid grey"   //default look
+            userInp.style.border="0.5px solid grey"
+            pwdInp.style.border="0.5px solid grey"
+            active.style.border="1px solid #2980B9"   //indicator of active element
+            
+        }
+
+		 function hide()   //redundant for now
+        {
+            row1.style.display="hidden";
+            row2.style.display="hidden";
+            row3.style.display="hidden";
+            delbtn.style.display="hidden";
+            caps.style.display="hidden";
+            row0.style.display="hidden";
+            
+        }
+
+
+      
+
+        
+        
+        function keypr(e){
+//function to append the value of the key to the end of the active input field when a key is pressed on the virtual keyboard
+// e contains the id of the virtual key that is pressed          
+            var vl=active.value; //gets value of active input field
+            if(vl==null)
+                val='';
+            else
+                val=vl;
+            val=val+String.fromCharCode(e); //appends the character from the ascii value in the id of the key pressed
+            active.value=val;           //modifies the value of the active input field
+            check();                 //checks to see if username already exists
+        }
+
+
+           function numpr(e){
+               //same as keypr for numbers
+            var vl=active.value;
+            if(vl==null)
+                val='';
+            else
+                val=vl;
+            val=val+e;
+            active.value=val;
+            check();
+        }
+
+        function del()
+        {
+            //deletes the last character from the active input field
+            var vl=active.value;
+            if(vl==null)
+                val='';
+            else
+                val=vl;
+            val=val.slice(0,val.length-1);   //slices the last character
+            active.value=val
+            check();
+        }
+        flag=0;               //indication of caps lock state
+        function cap()
+        {
+             chars=['!','@','#','$','%','^','&','*','(',')'];  //array of charcater on shift
+             chars2 = ['<','>','{','}','|','"',':','?','+','_'] //more characters
+            if(flag==0)                           //indicates caps lock off, turn it on
+            {caps.style.background="#82E0AA"      // makes the button green to indicate caps lock on
+           
+//loops to change the values of the buttons in the virtual keyboard to represent new values on shift
+            for(var i=0;i<10;i++)
+            {               
+                document.getElementById(i).setAttribute("value",chars[i]);
+                document.getElementById(i).setAttribute("id",chars[i]);
+                
+            }
+            
+            for(var i=0;i<10;i++)
+            {
+                document.getElementById(r4[i].charCodeAt(0)).setAttribute("value",chars2[i]);
+                document.getElementById(r4[i].charCodeAt(0)).setAttribute("id",chars2[i].charCodeAt(0));
+            }
+           
+
+            for(i=97;i<123;i++)
+            {
+                document.getElementById(i).setAttribute("id",i-32);         //changes alphabets from small to capitals
+                document.getElementById(i-32).setAttribute("value",String.fromCharCode(i-32));
+            }
+            flag=1;               //indicates th caps lock state is ON
+            }
+
+            else if(flag==1)                   //indicates caps lock is on, turn it off
+            {caps.style.background="white";       // reverts color of caps button
+
+            for(var i=0;i<10;i++)
+            {               
+                document.getElementById(chars[i]).setAttribute("value",i);
+                document.getElementById(chars[i]).setAttribute("id",i);
+                
+            }
+
+            for(i=65;i<91;i++)
+            {
+                document.getElementById(i).setAttribute("id",i+32);   //changes alphabets from capitals to small
+                document.getElementById(i+32).setAttribute("value",String.fromCharCode(i+32));
+            }
+
+             for(var i=0;i<10;i++)
+            {
+                //changes the row of special symbols
+                document.getElementById(chars2[i].charCodeAt(0)).setAttribute("value",r4[i]);
+                document.getElementById(chars2[i].charCodeAt(0)).setAttribute("id",r4[i].charCodeAt(0));
+            }
+           
+            flag=0;  // indicates the caps lock state is OFF
+
+            }
+
+        }
+
+
+
+	</script>
+
+  </body>
+</html>

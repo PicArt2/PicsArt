@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8 />
+  <title></title>
+    {%load static%}
+  <link rel="shortcut icon" href="Images/logo2.png">
+		<link rel="stylesheet" type="text/css" href="{%static 'intro.css'%}">
+		<link rel="stylesheet" type="text/css" href="{%static 'form.css'%}">
+		<link rel="stylesheet" type="text/css" href="{%static 'CSS/Writeup.css'%}"/>
+		<link rel="stylesheet" href="{%static 'iCSS/animate.css'%}">
+		<link rel="stylesheet" href="{%static 'JS/wow.min.js'%}">
+		<script src="{%static 'JS/wow.min.js'%}">
+		</script>
+
+  <style>
+	h4{
+	color: white;
+	}
+    div.container {
+      display:inline-block;
+    }
+
+    p {
+      text-align:center;
+    }
+      
+      #Abhilash,#Milan,#Anirudh{display:none;}
+	
+  </style>
+</head>
+<body>
+<link rel="stylesheet" href="{%static 'CSS/hom.css'%}">
+    
+		<div class="first"><img class="logo" src="{%static 'Images/logo3.png'%}"></div>
+		
+		
+		<div class="hi">
+<div class="block -berry edge--bottom">
+    
+
+    <nav class="menu">
+        <a href="/" class=".menuitem">Home</a>
+        <a href="#" class=".menuitem">About Us</a>
+        <a href="/imgProcess" class=".menuitem">Image processing</a>
+        <a href="/info" class=".menuitem">IBM Watson</a>
+        <a href="/info" class=".menuitem">Using Django</a>
+        <a href="#" class=".menuitem">Feedback</a>		
+        <div class="animation start-home"></div>
+    </nav>
+    </div>
+
+</div>
+</br>
+</br></br></br>
+<center>
+  <div class="container" >
+	<figure onclick="show('Milan')"><img src="{%static 'Images/milan.jpg'%}" height="200" width="200" id='MilanPic' /><figcaption> <h4>Milan J Srinivas</h4></figcaption></figure>
+  </div>
+  <div class="container" >
+  <figure onclick="show('Abhilash')"><img class="middle-img" src="{%static 'Images/abhi.jpg'%}"/ height="200" width="200" id='AbhilashPic'/><figcaption><h4>Abhilash R Kashyap</h4> </figcaption></figure>
+    
+  </div> 
+  <div class="container" >
+  <figure onclick="show('Anirudh')"><img src="{%static 'Images/ani.jpg'%}" height="200" width="200"id='AnirudhPic' /><figcaption><h4> Anirudh S</h4> </figcaption></figure>
+  </div>
+    
+<div id='Abhilash'>
+<p class="ola2 wow fadeInLeft animated" style="font-size:1.5em">
+I am Abhilash Kashyap and I am currently pursuing B.Tech ( Computer Science ) at PES University, Bangalore.</br></br> I am passionate in hands on learning. I also love to travel as a part of my profession. Absolutely love cooking. Big time foodie. Loves to socialize with people. Tend to scare people with my laugh.</br></br> My motto: 
+
+"Yesterday is history, tomorrow is a mystery, and today is a gift... that's why they call it present”-Master Oogway</p>
+    
+ </div>
+<div id='Anirudh'>
+<p class="ola2 wow fadeInLeft animated" style="font-size:1.5em">
+I am Anirudh S and I am currently pursuing B.Tech Computer Science at PES University, Bangalore.</br></br> I'm an avid sports fan and a keen follower of cricket. I like reading non-fictional books. I love literature and enjoy creative writing and poetry. Also like travelling to different places, understand their culture and try out their cuisines. I also enjoy coding on platforms such as hackerrank. </br></br>  
+
+"Life isn't about waiting for the storm to pass...It's about learning how to dance in the rain"-Vivian Greene</p>
+</div>
+
+<div id='Milan'>
+<p class="ola2 wow fadeInLeft animated" style="font-size:1.5em">
+I am Milan J Srinivas and I am currently pursuing B.Tech Computer Science at PES University, Bangalore.</br></br>I love photography. Will take pictures of anything and everything. Also love to play Tennis and Cricket, and of course, read novels. Jeffrey Archer is my personal favorite  </br></br>  
+
+"We all make mistakes but one has to move on"- Jeffrey Archer</p>
+</div>
+
+<div id='General'>
+<p class="ola2 wow fadeInLeft animated" style="font-size:1.5em">
+ 
+We are 3 students currently pursuing BTech Computer Science in PES University. We made this site up in the summer vacations of our second year of our course.
+</br></br> 
+Click on our photographs to find out more about us
+</p>
+</div>
+
+
+
+
+    
+<script>
+// When the user clicks on div, open the popup
+function myFunction() {
+    var container = document.getElementById("myPopup");
+    container.classList.toggle("show");
+}
+    Abhilash = document.getElementById('Abhilash');
+    Milan = document.getElementById('Milan');
+    Anirudh = document.getElementById('Anirudh');
+    
+    AbhilashPic = document.getElementById('AbhilashPic');
+    MilanPic = document.getElementById('MilanPic');
+    AnirudhPic = document.getElementById('AnirudhPic');
+    General = document.getElementById('General');
+    
+    function show(name)
+    {
+        Abhilash.style.display='none';
+        Anirudh.style.display='none';
+        Milan.style.display='none';
+        General.style.display='none';
+        
+        
+        AbhilashPic.style.height='100px';
+        AbhilashPic.style.width='100px';
+        AnirudhPic.style.height='100px';
+        AnirudhPic.style.width='100px';
+        MilanPic.style.height='100px';
+        MilanPic.style.width='100px';
+        
+        document.getElementById(name).style.display='block';
+        document.getElementById(name+'Pic').style.height='200px';
+        document.getElementById(name+'Pic').style.width='200px';
+        
+    }
+</script>
+</center>
+</body>
+</html>

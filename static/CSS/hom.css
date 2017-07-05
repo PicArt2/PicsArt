@@ -1,0 +1,202 @@
+.mySlides {display:none;
+}
+
+.center {
+	margin: 0;
+	width: 1200px;
+	height:500px;
+	padding: 0px;
+	display:block;
+	position:absolute;
+	top:25%;
+	left:10%;
+	
+}
+.center1 {
+	margin: auto;
+	width: 100%;
+	height:15%;
+	padding: 2px;
+	display:block;
+	background-color:black;
+	text-color:blue;
+}
+.first{
+	margin: auto;
+	width: 100%;
+	height:16%;
+	padding:2px;
+	display:block;
+	top:0px;
+	left:0px;	
+	margin-top: 20px;
+	position:absolute;
+	z-index:1;
+	text-color:white;
+	background-image:url("CSS_Images/wall1.jpg");
+	background-size:cover;
+	animation:bar 2s ease-in-out;
+}
+@keyframes bar
+{
+  0% {
+    top: 100%;
+  }
+  80%{
+	top:-5%;
+  }
+  100% {
+    top: 0%;;
+  }
+}
+.logo{
+	height:15%;
+	width:30%;
+	margin:auto;
+	position:fixed;
+	left:35%;
+	
+}
+.caption{
+	background-color:black;	
+	height:4%;
+	width:24.75%;	
+	position:absolute;
+	left:75%;
+	top:96%;
+	color:white;
+	opacity:0.4;
+	z-index:3;
+	display:none;
+}
+.last{
+		position:absolute;
+		top:101%;
+		left:38%;
+}
+.slideshow{
+		height:600px;
+		width:70%;
+		position:absolute;
+		bottom:20px;
+		
+}
+.fades{
+	animation:fades 6s infinite;	
+}
+@keyframes fades{
+	0%{
+		opacity:1.0;
+	}
+	33%{
+		opacity:1.0;
+	}
+	98%{
+		opacity:1.0;
+	}
+	100%{
+		opacity:0.4;
+	}
+}
+body{
+	background-color:#0d0d0d;
+	background-size:cover;
+	background-attachment:fixed;
+	z-index:-1;
+}
+.mainbar{
+	position:fixed;
+	width:100%;
+	height:5%;
+	top:15%;
+	left:0;
+	background-color:#0d0d0d;
+	z-index:2;
+	animation:fade 2s ease-in-out;
+
+}
+@keyframes fade{
+  0% {
+    opacity:0;
+  }
+  95% {
+    opacity:0;
+  }
+  100%{
+	  opacity:1.0;
+  }
+}
+.barsize{
+	height:100%;
+	width:4%;
+}
+.home{
+	animation:move 4s ease-in-out;
+}
+@keyframes move{
+	0%{
+		left:100%;
+	}
+	50%{
+		left:100%;
+	}
+	80%{
+		left:-5%;
+	}
+	100%{
+		left:0%;
+	}
+}
+.fading{
+	animation:fading 4s;
+}
+@keyframes fading{
+	0%{
+		opacity:0.0;
+	}
+	99%{
+			opacity:0.0;
+	}
+	100%{
+			opacity:1.0;
+	}
+}
+.input[type=text] {
+    height:100%;
+    transition: width 2s ease-in-out;
+}
+input[type=text] {
+	animation:fadese 1s;
+}
+/* When the input field gets focus, change its width to 100% */
+input[type=text]:focus {
+    height: 30px;
+}
+@keyframes fadese{
+	0%{opacity:0.0;}
+	80%{opacity:0.0;}
+	100%{opacity:1.0;}
+}
+
+#loader {
+  position: absolute;
+  text-align: center;
+  left: 47%;
+  top: 40%;
+  z-index: 1;
+  width: 200px;
+  height: 200px;
+ 
+}
+#myDiv{
+	display:none;
+}
+html{
+	width:100%;
+	overflow-x:hidden;
+}
+@keyframes myOrbit {
+    from { transform: rotate(0deg) translateX(150px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(150px) rotate(0deg) ; }
+}
+
